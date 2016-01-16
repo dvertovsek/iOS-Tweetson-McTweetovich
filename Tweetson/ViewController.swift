@@ -13,8 +13,8 @@ import SwiftyJSON
 
 class ViewController: UIViewController {
 
-    let consumerKey = "F2XUhUQaOhVLBSJhpfM2Bxm3c"
-    let consumerSecret = "6SCtC9lTYaws010odlLYLtcrRHHZHSTnWe2ZTzZWAlpOCMfTTG"
+    var consumerKey = String()
+    var consumerSecret = String()
     
     var base64encoded = String()
     
@@ -22,6 +22,11 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let o: Obfuscator = Obfuscator.newWithSaltUnsafe("swift")
+        
+        consumerKey = o.reveal(MyObjectiveCInterface.getKey())
+        consumerSecret = o.reveal(MyObjectiveCInterface.getSecret())
         
         let urlEncodedConsKey: String = consumerKey.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
         
