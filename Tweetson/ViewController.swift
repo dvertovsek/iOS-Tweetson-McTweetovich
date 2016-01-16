@@ -23,6 +23,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
         let o: Obfuscator = Obfuscator.newWithSaltUnsafe("swift")
         
         consumerKey = o.reveal(MyObjectiveCInterface.getKey())
@@ -47,16 +49,18 @@ class ViewController: UIViewController {
         ]
         let params = ["grant_type" : "client_credentials"]
         
-        Alamofire.request(.POST, "https://api.twitter.com/oauth2/token", headers: headers, parameters: params)
-            .responseJSON { response in
-                
-                let bearerToken = String(JSON(response.result.value!)["access_token"])
-                
-                self.token = bearerToken
-                
-                self.sendRequestToTwitter()
-                
-        }
+//        Alamofire.request(.POST, "https://api.twitter.com/oauth2/token", headers: headers, parameters: params)
+//            .responseJSON { response in
+//                
+//                let bearerToken = String(JSON(response.result.value!)["access_token"])
+//                
+//                self.token = bearerToken
+//                
+//                self.sendRequestToTwitter()
+//                
+//        }
+        
+        
         
     }
     
@@ -101,7 +105,7 @@ class ViewController: UIViewController {
         }
 
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

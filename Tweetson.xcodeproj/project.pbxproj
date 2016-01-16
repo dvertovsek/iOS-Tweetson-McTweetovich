@@ -14,6 +14,9 @@
 		527DB0971C4A4E4E00866C03 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 527DB0951C4A4E4E00866C03 /* LaunchScreen.storyboard */; };
 		527DB0A21C4A647C00866C03 /* Obfuscator.m in Sources */ = {isa = PBXBuildFile; fileRef = 527DB0A11C4A647C00866C03 /* Obfuscator.m */; };
 		527DB0A81C4A69AA00866C03 /* myobjectivecfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 527DB0A71C4A69AA00866C03 /* myobjectivecfile.m */; };
+		527DB0AD1C4A80E400866C03 /* TWTSideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 527DB0AC1C4A80E400866C03 /* TWTSideMenuViewController.m */; };
+		527DB0B11C4A851700866C03 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527DB0B01C4A851700866C03 /* MainViewController.swift */; };
+		527DB0B31C4A892100866C03 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527DB0B21C4A892100866C03 /* MenuViewController.swift */; };
 		AAE3E72CB27C021B27F4400C /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6E0F7E0FD202BE718F3CA46 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +34,10 @@
 		527DB0A11C4A647C00866C03 /* Obfuscator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Obfuscator.m; sourceTree = "<group>"; };
 		527DB0A31C4A68AF00866C03 /* myheader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = myheader.h; sourceTree = "<group>"; };
 		527DB0A71C4A69AA00866C03 /* myobjectivecfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = myobjectivecfile.m; sourceTree = "<group>"; };
+		527DB0AB1C4A80E400866C03 /* TWTSideMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWTSideMenuViewController.h; sourceTree = "<group>"; };
+		527DB0AC1C4A80E400866C03 /* TWTSideMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWTSideMenuViewController.m; sourceTree = "<group>"; };
+		527DB0B01C4A851700866C03 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		527DB0B21C4A892100866C03 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		BE761C374396CC622F08B644 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		C6E0F7E0FD202BE718F3CA46 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -77,19 +84,39 @@
 		527DB08B1C4A4E4E00866C03 /* Tweetson */ = {
 			isa = PBXGroup;
 			children = (
+				527DB0AA1C4A80BB00866C03 /* TWTSideMenu framework */,
+				527DB0A91C4A802800866C03 /* Obfuscator framework */,
 				527DB08C1C4A4E4E00866C03 /* AppDelegate.swift */,
 				527DB08E1C4A4E4E00866C03 /* ViewController.swift */,
 				527DB0901C4A4E4E00866C03 /* Main.storyboard */,
 				527DB0931C4A4E4E00866C03 /* Assets.xcassets */,
 				527DB0951C4A4E4E00866C03 /* LaunchScreen.storyboard */,
-				527DB0A01C4A647C00866C03 /* Obfuscator.h */,
-				527DB0A11C4A647C00866C03 /* Obfuscator.m */,
 				527DB0A31C4A68AF00866C03 /* myheader.h */,
 				527DB0981C4A4E4E00866C03 /* Info.plist */,
 				527DB09F1C4A647B00866C03 /* Tweetson-Bridging-Header.h */,
 				527DB0A71C4A69AA00866C03 /* myobjectivecfile.m */,
+				527DB0B01C4A851700866C03 /* MainViewController.swift */,
+				527DB0B21C4A892100866C03 /* MenuViewController.swift */,
 			);
 			path = Tweetson;
+			sourceTree = "<group>";
+		};
+		527DB0A91C4A802800866C03 /* Obfuscator framework */ = {
+			isa = PBXGroup;
+			children = (
+				527DB0A01C4A647C00866C03 /* Obfuscator.h */,
+				527DB0A11C4A647C00866C03 /* Obfuscator.m */,
+			);
+			name = "Obfuscator framework";
+			sourceTree = "<group>";
+		};
+		527DB0AA1C4A80BB00866C03 /* TWTSideMenu framework */ = {
+			isa = PBXGroup;
+			children = (
+				527DB0AB1C4A80E400866C03 /* TWTSideMenuViewController.h */,
+				527DB0AC1C4A80E400866C03 /* TWTSideMenuViewController.m */,
+			);
+			name = "TWTSideMenu framework";
 			sourceTree = "<group>";
 		};
 		E41894D6047284761B91403C /* Frameworks */ = {
@@ -222,7 +249,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				527DB0B11C4A851700866C03 /* MainViewController.swift in Sources */,
 				527DB08F1C4A4E4E00866C03 /* ViewController.swift in Sources */,
+				527DB0AD1C4A80E400866C03 /* TWTSideMenuViewController.m in Sources */,
+				527DB0B31C4A892100866C03 /* MenuViewController.swift in Sources */,
 				527DB0A81C4A69AA00866C03 /* myobjectivecfile.m in Sources */,
 				527DB0A21C4A647C00866C03 /* Obfuscator.m in Sources */,
 				527DB08D1C4A4E4E00866C03 /* AppDelegate.swift in Sources */,
