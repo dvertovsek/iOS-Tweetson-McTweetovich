@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MapKit
 import CoreLocation
 
 import SwiftyJSON
@@ -48,10 +47,11 @@ class ViewController: UIViewController {
                 locationManager.startUpdatingLocation()
             }
         }
-        else if(SimulatorUtility.isRunningSimulator || !CLLocationManager.locationServicesEnabled())
+        if(SimulatorUtility.isRunningSimulator || CLLocationManager.authorizationStatus() == .Denied)
         {
             self.getWoeidFromLatLong(getDefaultLocation())
         }
+
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), {
             while(true)
             {
