@@ -14,6 +14,7 @@ import SwiftyJSON
 import Alamofire
 
 import ws
+import data
 
 class ViewController: UIViewController {
     
@@ -25,13 +26,13 @@ class ViewController: UIViewController {
     let locationManager = CLLocationManager()
     
     var tableView = UITableView()
-    var tweetsArray = [String]()
+    var tweetsArray = [Tweet]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.title = "Trending"
-//        self.view.backgroundColor = UIColor.grayColor()
+
         let openItem = UIBarButtonItem(image: UIImage(named :"open"), style: UIBarButtonItemStyle.Plain, target: self, action: "onOpenButtonPressed")
         self.navigationItem.leftBarButtonItem = openItem
         
@@ -75,7 +76,7 @@ class ViewController: UIViewController {
 //            })
 //        })
         
-        tableView.backgroundColor = UIColor.cyanColor()
+        tableView.backgroundColor = UIColor(red: 200/255, green: 204/255, blue: 190/255, alpha: 0.8)
         tableView.heightAnchor.constraintEqualToConstant(self.view.frame.size.height * 0.8).active = true
         tableView.widthAnchor.constraintEqualToConstant(self.view.frame.size.width).active = true
         tableView.delegate = self
@@ -83,7 +84,7 @@ class ViewController: UIViewController {
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "tweet")
         
         let w = UIView()
-        w.backgroundColor = UIColor.yellowColor()
+        w.backgroundColor = UIColor.grayColor()
         w.heightAnchor.constraintEqualToConstant(self.view.frame.size.height * 0.2).active = true
         w.widthAnchor.constraintEqualToConstant(self.view.frame.size.width).active = true
         
@@ -214,7 +215,10 @@ extension ViewController: WebServiceResultDelegate
             
             for (_, value) in twitterTrendsArray {
                 
-                tweetsArray.append(String(value["name"]))
+                let t = Tweet(name: String(value["name"]),
+                    tweetCount: String(value["tweet_volume"]),
+                    url: String(value["url"]))
+                tweetsArray.append(t)
             }
             
             tableView.reloadData()
@@ -261,11 +265,28 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("tweet")! as UITableViewCell
+//        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("tweet")! as UITableViewCell
+        let cell = UITableViewCell.init(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "tweet")
         
-        cell.backgroundColor = UIColor.cyanColor()
-        cell.textLabel!.text = self.tweetsArray[indexPath.row]
+        let t = tweetsArray[indexPath.row]
         
+        cell.backgroundColor = UIColor(red: 200/255, green: 204/255, blue: 190/255, alpha: 0.8)
+        
+        let tweetVolume = (t.tweetCount == "null" ? "0" : t.tweetCount)
+        
+        cell.textLabel!.text = t.name + " (Tweet volume - " + tweetVolume + ")"
+        cell.detailTextLabel?.text = t.url.stringByRemovingPercentEncoding!
+        
+        cell.textLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 20)
+        cell.detailTextLabel?.font = UIFont(name: "AvenirNextCondensed-UltraLight" , size: 15)
+
         return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let targetUrl = NSURL(string: tweetsArray[indexPath.row].url)
+        
+        let app = UIApplication.sharedApplication()
+        app.openURL(targetUrl!)
     }
 }
