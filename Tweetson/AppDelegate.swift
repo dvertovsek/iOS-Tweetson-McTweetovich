@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import ws
+import SwiftyJSON
+import Alamofire
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var mainViewController: MainViewController?
     var menuViewController: MenuViewController?
 
+    var httpReq: HTTPReq?
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
@@ -34,12 +39,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.window?.rootViewController = self.sideMenuViewController
         
+        httpReq = HTTPReq(delegate: self)
+        
+        let headers = [
+            "Authorization": "Basic "+ResourcesUtility.encodeKeyAndSecret(),
+            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+        ]
+        let params = ["grant_type" : "client_credentials"]
+        
+        httpReq?.httprequest(Alamofire.Method.POST, url: "https://api.twitter.com/oauth2/token", headers: headers, parameters: params)
+        
         return true
-    }
-    
-    func getMenuViewController()->UIViewController
-    {
-        return menuViewController!
     }
     
     func applicationWillResignActive(application: UIApplication) {
@@ -65,5 +75,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
+}
+
+extension AppDelegate: WebServiceResultDelegate
+{
+    func getResult(result: AnyObject) {
+        ResourcesUtility.bearerToken = String(JSON(result)["access_token"])
+    }
 }
 

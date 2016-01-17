@@ -7,109 +7,265 @@
 //
 
 import UIKit
+import MapKit
+import CoreLocation
 
-import Alamofire
 import SwiftyJSON
+import Alamofire
+
+import ws
 
 class ViewController: UIViewController {
-
-    var consumerKey = String()
-    var consumerSecret = String()
     
-    var base64encoded = String()
+    var YahooWhereOnEarthIdOldValue = "none"
+    var YahooWhereOnEarthId: String?
     
-    var token = String()
+    var httpReq: HTTPReq?
+    
+    let locationManager = CLLocationManager()
+    
+    var tableView = UITableView()
+    var tweetsArray = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Trending"
+//        self.view.backgroundColor = UIColor.grayColor()
+        let openItem = UIBarButtonItem(image: UIImage(named :"open"), style: UIBarButtonItemStyle.Plain, target: self, action: "onOpenButtonPressed")
+        self.navigationItem.leftBarButtonItem = openItem
         
-        
-        let o: Obfuscator = Obfuscator.newWithSaltUnsafe("swift")
-        
-        consumerKey = o.reveal(MyObjectiveCInterface.getKey())
-        consumerSecret = o.reveal(MyObjectiveCInterface.getSecret())
-        
-        let urlEncodedConsKey: String = consumerKey.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-        
-        let urlEncodedConsSecret: String = consumerSecret.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-        
-        let keySecret = urlEncodedConsKey + ":" + urlEncodedConsSecret
-        let utf8str = keySecret.dataUsingEncoding(NSUTF8StringEncoding)
-        
-        if let base64EncodedString = utf8str?.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
+        httpReq = HTTPReq(delegate: self)
+        if !SimulatorUtility.isRunningSimulator
         {
-            base64encoded = base64EncodedString
-
+            locationManager.requestAlwaysAuthorization()
+            locationManager.requestWhenInUseAuthorization()
+            
+            if CLLocationManager.locationServicesEnabled() {
+                locationManager.delegate = self
+                locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                locationManager.startUpdatingLocation()
+            }
         }
+        else if(SimulatorUtility.isRunningSimulator || !CLLocationManager.locationServicesEnabled())
+        {
+            self.getWoeidFromLatLong(getDefaultLocation())
+        }
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), {
+            while(true)
+            {
+                if(self.YahooWhereOnEarthId != nil &&
+                    self.YahooWhereOnEarthId! != self.YahooWhereOnEarthIdOldValue)
+                {
+                    self.getTrends()
+                    self.YahooWhereOnEarthIdOldValue = self.YahooWhereOnEarthId!
+                }
+            }
+        })
         
-        let headers = [
-            "Authorization": "Basic "+base64encoded,
-            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-        ]
-        let params = ["grant_type" : "client_credentials"]
-        
-//        Alamofire.request(.POST, "https://api.twitter.com/oauth2/token", headers: headers, parameters: params)
-//            .responseJSON { response in
+//        let qualityOfServiceClass = QOS_CLASS_UTILITY
+//        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+//        
+//        dispatch_async(backgroundQueue, {
+//            while(ResourcesUtility.bearerToken == "none"){}
+//            //this is new thread
+//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
 //                
-//                let bearerToken = String(JSON(response.result.value!)["access_token"])
-//                
-//                self.token = bearerToken
-//                
-//                self.sendRequestToTwitter()
-//                
-//        }
+//                //this is run on the main thread
+//            })
+//        })
         
+        tableView.backgroundColor = UIColor.cyanColor()
+        tableView.heightAnchor.constraintEqualToConstant(self.view.frame.size.height * 0.8).active = true
+        tableView.widthAnchor.constraintEqualToConstant(self.view.frame.size.width).active = true
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "tweet")
         
+        let w = UIView()
+        w.backgroundColor = UIColor.yellowColor()
+        w.heightAnchor.constraintEqualToConstant(self.view.frame.size.height * 0.2).active = true
+        w.widthAnchor.constraintEqualToConstant(self.view.frame.size.width).active = true
         
+        let stackView = UIStackView()
+        
+        stackView.axis = UILayoutConstraintAxis.Vertical
+        stackView.distribution = UIStackViewDistribution.EqualSpacing
+        stackView.alignment = UIStackViewAlignment.Center
+        
+        stackView.addArrangedSubview(tableView)
+        stackView.addArrangedSubview(w)
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(stackView)
+        
+        stackView.centerXAnchor.constraintEqualToAnchor(self.view.centerXAnchor).active = true
+        stackView.centerYAnchor.constraintEqualToAnchor(self.view.centerYAnchor).active = true
+        
+//        let stackViewTopConstraint = NSLayoutConstraint(
+//            item: stackView,
+//            attribute: NSLayoutAttribute.Top,
+//            relatedBy: NSLayoutRelation.Equal,
+//            toItem: self.topLayoutGuide,
+//            attribute: NSLayoutAttribute.Bottom,
+//            multiplier: 1.0,
+//            constant: 0)
+//        self.view.addConstraint(stackViewTopConstraint)
+//        
+//        let stackViewBottomConstraint = NSLayoutConstraint(
+//            item: stackView,
+//            attribute: NSLayoutAttribute.Bottom,
+//            relatedBy: NSLayoutRelation.Equal,
+//            toItem: self.bottomLayoutGuide,
+//            attribute: NSLayoutAttribute.Top,
+//            multiplier: 1.0,
+//            constant: 0)
+//        self.view.addConstraint(stackViewBottomConstraint)
+//        
+//        let stackViewLeadingConstraint = NSLayoutConstraint(
+//            item: stackView,
+//            attribute: NSLayoutAttribute.Leading,
+//            relatedBy: NSLayoutRelation.Equal,
+//            toItem: self.view,
+//            attribute: NSLayoutAttribute.LeadingMargin,
+//            multiplier: 1.0,
+//            constant: 0)
+//        self.view.addConstraint(stackViewLeadingConstraint)
+//        
+//        let stackViewTrailingConstraint = NSLayoutConstraint(
+//            item: stackView,
+//            attribute: NSLayoutAttribute.Trailing,
+//            relatedBy: NSLayoutRelation.Equal,
+//            toItem: self.view,
+//            attribute: NSLayoutAttribute.TrailingMargin,
+//            multiplier: 1.0,
+//            constant: 0)
+//        self.view.addConstraint(stackViewTrailingConstraint)
+        
+//        let heightConstraintV = NSLayoutConstraint(
+//            item: v,
+//            attribute: NSLayoutAttribute.Height,
+//            relatedBy: NSLayoutRelation.Equal,
+//            toItem: nil,
+//            attribute: NSLayoutAttribute.NotAnAttribute,
+//            multiplier: self.view.frame.size.height,
+//            constant: 0.5)
+//
+//        let heightConstraintW = NSLayoutConstraint(
+//            item: w,
+//            attribute: NSLayoutAttribute.Height,
+//            relatedBy: NSLayoutRelation.Equal,
+//            toItem: nil,
+//            attribute: NSLayoutAttribute.NotAnAttribute,
+//            multiplier: self.view.frame.size.height,
+//            constant: 0.5)
+    
     }
     
-    private func sendRequestToTwitter()
+    @IBAction private func onOpenButtonPressed()
+    {
+        let a = self.sideMenuViewController?.menuViewController as! MenuViewController
+        
+        a.animate()
+        
+        self.sideMenuViewController?.openMenuAnimated(true, completion:nil)
+    }
+    
+    private func getWoeidFromLatLong(location: CLLocationCoordinate2D)
     {
         let headers = [
-            "Authorization" : "Bearer "+token
+            "Authorization" : "Bearer "+ResourcesUtility.bearerToken
         ]
-
         let params = [
-            "lat" : "37",
-            "long" : "-122"
-        ]
-        Alamofire.request(.GET, "https://api.twitter.com/1.1/trends/closest.json", headers: headers, parameters : params)
-            .responseJSON { response in
-                
-//                print(response.result.value)
-                
-                let json = JSON(response.result.value!)
-                
-                let woeid = String(json[0]["woeid"])
-                
-                self.getTrends(woeid)
-        }
-
-    }
-    
-    private func getTrends(woeid: String)
-    {
-        let headers = [
-            "Authorization" : "Bearer "+token
+            "lat" : String(location.latitude),
+            "long" : String(location.longitude)
         ]
         
-        let params = [
-            "id" : woeid
-        ]
-        print("get trends for ",woeid,"\n\n")
-        Alamofire.request(.GET, "https://api.twitter.com/1.1/trends/place.json", headers: headers, parameters : params)
-            .responseJSON { response in
-                
-                print(response.result.value)
-        }
-
+        self.httpReq?.httprequest(Alamofire.Method.GET, url: "https://api.twitter.com/1.1/trends/closest.json", headers: headers, parameters : params)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    private func getTrends()
+    {
+        let headers = [
+            "Authorization" : "Bearer "+ResourcesUtility.bearerToken
+        ]
+        let params = [
+            "id" : self.YahooWhereOnEarthId!
+        ]
+        
+        httpReq?.httprequest(.GET, url: "https://api.twitter.com/1.1/trends/place.json", headers: headers, parameters : params)
+    }
+    
+    private func getDefaultLocation()->CLLocationCoordinate2D
+    {
+//        Default location: Montreal, Canada
+        return CLLocationCoordinate2DMake(45.5086699, -73.5539925)
     }
     
 }
 
+extension ViewController: WebServiceResultDelegate
+{
+    func getResult(result: AnyObject) {
+        let json = JSON(result)
+        if String(json[0]["woeid"]) == "null"
+        {
+            let twitterTrendsArray = json[0]["trends"]
+            
+            for (_, value) in twitterTrendsArray {
+                
+                tweetsArray.append(String(value["name"]))
+            }
+            
+            tableView.reloadData()
+        }
+        else
+        {
+            if(self.YahooWhereOnEarthId != nil)
+            {
+                self.YahooWhereOnEarthIdOldValue = self.YahooWhereOnEarthId!
+            }
+            self.YahooWhereOnEarthId = String(json[0]["woeid"])
+        }
+    }
+}
+
+extension ViewController: CLLocationManagerDelegate
+{
+    
+    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
+        locationManager.startUpdatingLocation()
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        let location = manager.location!.coordinate
+        locationManager.stopUpdatingLocation()
+        self.getWoeidFromLatLong(location)
+    }
+    
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        
+        locationManager.stopUpdatingLocation()
+    }
+}
+
+extension ViewController: UITableViewDelegate, UITableViewDataSource
+{
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return self.view.frame.size.height * 0.1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.tweetsArray.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("tweet")! as UITableViewCell
+        
+        cell.backgroundColor = UIColor.cyanColor()
+        cell.textLabel!.text = self.tweetsArray[indexPath.row]
+        
+        return cell
+    }
+}

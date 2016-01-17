@@ -40,7 +40,7 @@ class MenuViewController: UIViewController {
         twitterButton.titleLabel?.font = UIFont(name: "HelveticaNeue-UltraLight", size: 30)
         
         twitterButton.setTitle("Check events", forState: UIControlState.Normal)
-        twitterButton.addTarget(self, action: "onCloseButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
+        twitterButton.addTarget(self, action: "onCheckEventsButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
         twitterButton.alpha = 0
         self.view.addSubview(twitterButton)
         
@@ -57,15 +57,6 @@ class MenuViewController: UIViewController {
     
     }
     
-    override func viewWillAppear(animated: Bool) {
-        
-    }
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        
-    }
-    
     private func setAlpha()
     {
         UIView.animateWithDuration(0.3) { () -> Void in
@@ -80,6 +71,12 @@ class MenuViewController: UIViewController {
             self.twitterButton.alpha = 1.0
             self.closeButton.alpha = 1.0
         }
+    }
+    
+    @IBAction private func onCheckEventsButtonPressed()
+    {
+        let controller = UINavigationController.init(rootViewController: ViewController())
+        self.sideMenuViewController?.setMainViewController(controller, animated: true, closeMenu: true)
     }
     
     @IBAction private func onCloseButtonPressed()
