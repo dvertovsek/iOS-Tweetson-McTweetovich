@@ -64,18 +64,18 @@ class MenuViewController: UIViewController {
     
     private func setAlpha()
     {
-//        UIView.animateWithDuration(0.3) { () -> Void in
-//            self.twitterButton.alpha = 0
-//            self.closeButton.alpha = 0
-//        }
+        UIView.animateWithDuration(0.3) { () -> Void in
+            self.twitterButton.alpha = 0
+            self.closeButton.alpha = 0
+        }
     }
     
     func animate()
     {
-//        UIView.animateWithDuration(1.5) { () -> Void in
-//            self.twitterButton.alpha = 1.0
-//            self.closeButton.alpha = 1.0
-//        }
+        UIView.animateWithDuration(1.5) { () -> Void in
+            self.twitterButton.alpha = 1.0
+            self.closeButton.alpha = 1.0
+        }
     }
     
     @IBAction private func onCheckEventsButtonPressed()
