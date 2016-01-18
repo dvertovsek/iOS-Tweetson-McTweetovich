@@ -59,23 +59,21 @@ class MenuViewController: UIViewController {
 //        closeButton.titleLabel?.setTextWithTypeAnimation("Close")
         self.view.addSubview(closeButton)
     
-
+        setAlpha(0.3,val:0)
     }
     
-    private func setAlpha()
+    private func setAlpha(timeInt:NSTimeInterval,val:CGFloat)
     {
-        UIView.animateWithDuration(0.3) { () -> Void in
-            self.twitterButton.alpha = 0
-            self.closeButton.alpha = 0
+        UIView.animateWithDuration(timeInt) { () -> Void in
+            self.twitterButton.alpha = val
+            self.closeButton.alpha = val
         }
     }
     
     func animate()
     {
-        UIView.animateWithDuration(1.5) { () -> Void in
-            self.twitterButton.alpha = 1.0
-            self.closeButton.alpha = 1.0
-        }
+        twitterButton.titleLabel?.setTextWithTypeAnimation("Check events", characterInterval: 0.04)
+        setAlpha(2.0, val: 1.0)
     }
     
     @IBAction private func onCheckEventsButtonPressed()
@@ -86,7 +84,7 @@ class MenuViewController: UIViewController {
     
     @IBAction private func onCloseButtonPressed()
     {
-        setAlpha()
+        setAlpha(0.3, val:0)
         self.sideMenuViewController?.closeMenuAnimated(true, completion:nil)
     }
 }
