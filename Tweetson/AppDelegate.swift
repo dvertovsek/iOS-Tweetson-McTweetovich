@@ -86,7 +86,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate: WebServiceResultDelegate
 {
     func getResult(result: AnyObject) {
-        ResourcesUtility.bearerToken = String(JSON(result)["access_token"])
+        let token = String(JSON(result)["access_token"])
+        ResourcesUtility.bearerToken = token
     }
 }
 

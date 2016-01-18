@@ -19,7 +19,7 @@ class MainViewController: UIViewController {
         self.view.backgroundColor = UIColor.grayColor()
         
         let openItem = UIBarButtonItem(image: UIImage(named :"open"), style: UIBarButtonItemStyle.Plain, target: self, action: "onOpenButtonPressed")
-        openItem.enabled = false
+//        openItem.enabled = false
         self.navigationItem.leftBarButtonItem = openItem
         
         let logInButton = TWTRLogInButton { (session, error) in
@@ -40,6 +40,7 @@ class MainViewController: UIViewController {
         
         // TODO: Change where the log in button is positioned in your view
         logInButton.center = self.view.center
+        
         self.view.addSubview(logInButton)
 
         //Tweet view example

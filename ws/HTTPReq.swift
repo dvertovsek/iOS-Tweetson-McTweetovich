@@ -24,6 +24,8 @@ public class HTTPReq
     
     public func httprequest(method: Alamofire.Method,url: String, headers: [String:String], parameters: [String:String])
     {
+        print(headers)
+        print(parameters)
         Alamofire.request(method, url,headers: headers, parameters: parameters)
             .responseJSON { response in
                 if let json = response.result.value{

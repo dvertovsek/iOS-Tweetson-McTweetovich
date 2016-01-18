@@ -47,7 +47,9 @@ class ViewController: UIViewController {
             locationManager.requestAlwaysAuthorization()
             locationManager.requestWhenInUseAuthorization()
             
-            if CLLocationManager.locationServicesEnabled() {
+            if CLLocationManager.locationServicesEnabled() &&
+                (CLLocationManager.authorizationStatus() == .AuthorizedAlways ||
+            CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse) {
                 locationManager.delegate = self
                 locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
                 locationManager.startUpdatingLocation()
@@ -184,9 +186,11 @@ class ViewController: UIViewController {
         let headers = [
             "Authorization" : "Bearer "+ResourcesUtility.bearerToken
         ]
+        let lat = String(location.latitude)
+        let long = String(location.longitude)
         let params = [
-            "lat" : String(location.latitude),
-            "long" : String(location.longitude)
+            "lat" : lat,
+            "long" : long
         ]
         
         self.httpReq?.httprequest(Alamofire.Method.GET, url: "https://api.twitter.com/1.1/trends/closest.json", headers: headers, parameters : params)

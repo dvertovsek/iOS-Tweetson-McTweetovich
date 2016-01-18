@@ -41,7 +41,9 @@ class MenuViewController: UIViewController {
         
         twitterButton.setTitle("Check events", forState: UIControlState.Normal)
         twitterButton.addTarget(self, action: "onCheckEventsButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
-        twitterButton.alpha = 0
+        twitterButton.alpha = 1
+        
+//        twitterButton.titleLabel?.setTextWithTypeAnimation("Check events")
         self.view.addSubview(twitterButton)
         
         closeButton.frame = CGRectMake(10, 200, 200, 44)
@@ -52,25 +54,28 @@ class MenuViewController: UIViewController {
         
         closeButton.setTitle("Close", forState: UIControlState.Normal)
         closeButton.addTarget(self, action: "onCloseButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
-        closeButton.alpha = 0
+        closeButton.alpha = 1
+        
+//        closeButton.titleLabel?.setTextWithTypeAnimation("Close")
         self.view.addSubview(closeButton)
     
+
     }
     
     private func setAlpha()
     {
-        UIView.animateWithDuration(0.3) { () -> Void in
-            self.twitterButton.alpha = 0
-            self.closeButton.alpha = 0
-        }
+//        UIView.animateWithDuration(0.3) { () -> Void in
+//            self.twitterButton.alpha = 0
+//            self.closeButton.alpha = 0
+//        }
     }
     
     func animate()
     {
-        UIView.animateWithDuration(1.5) { () -> Void in
-            self.twitterButton.alpha = 1.0
-            self.closeButton.alpha = 1.0
-        }
+//        UIView.animateWithDuration(1.5) { () -> Void in
+//            self.twitterButton.alpha = 1.0
+//            self.closeButton.alpha = 1.0
+//        }
     }
     
     @IBAction private func onCheckEventsButtonPressed()
@@ -84,4 +89,20 @@ class MenuViewController: UIViewController {
         setAlpha()
         self.sideMenuViewController?.closeMenuAnimated(true, completion:nil)
     }
+}
+
+extension UILabel {
+    
+    func setTextWithTypeAnimation(typedText: String, characterInterval: NSTimeInterval = 0.25) {
+        text = ""
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)) {
+            for character in typedText.characters {
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.text = self.text! + String(character)
+                }
+                NSThread.sleepForTimeInterval(characterInterval)
+            }
+        }
+    }
+    
 }
