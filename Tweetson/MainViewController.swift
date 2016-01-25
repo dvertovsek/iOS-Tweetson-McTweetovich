@@ -45,7 +45,7 @@ class MainViewController: UIViewController {
 
         //Tweet view example
         // TODO: Base this Tweet ID on some data from elsewhere in your app
-        TWTRAPIClient().loadTweetWithID("631879971628183552") { (tweet, error) in
+        TWTRAPIClient().loadTweetWithID("691619372536852480") { (tweet, error) in
             if let unwrappedTweet = tweet {
                 let tweetView = TWTRTweetView(tweet: unwrappedTweet)
                 tweetView.center = CGPointMake(self.view.center.x, self.topLayoutGuide.length + tweetView.frame.size.height / 2);

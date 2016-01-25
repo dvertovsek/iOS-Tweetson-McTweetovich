@@ -11,6 +11,7 @@ import UIKit
 class MenuViewController: UIViewController {
 
     let twitterButton = UIButton(type: UIButtonType.System)
+    let tweetsButton = UIButton(type: UIButtonType.System)
     let closeButton = UIButton(type: UIButtonType.System)
 
     override func viewDidLoad() {
@@ -43,8 +44,22 @@ class MenuViewController: UIViewController {
         twitterButton.addTarget(self, action: "onCheckEventsButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
         twitterButton.alpha = 1
         
-//        twitterButton.titleLabel?.setTextWithTypeAnimation("Check events")
+        //        twitterButton.titleLabel?.setTextWithTypeAnimation("Check events")
         self.view.addSubview(twitterButton)
+
+        tweetsButton.frame = CGRectMake(10, 150, 200, 44)
+        tweetsButton.backgroundColor = UIColor.clearColor()
+        tweetsButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        
+        tweetsButton.titleLabel?.font = UIFont(name: "HelveticaNeue-UltraLight", size: 30)
+        
+        tweetsButton.setTitle("See tweets", forState: UIControlState.Normal)
+        tweetsButton.addTarget(self, action: "onSeeTweetsButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
+        tweetsButton.alpha = 1
+        
+        //        twitterButton.titleLabel?.setTextWithTypeAnimation("Check events")
+        self.view.addSubview(tweetsButton)
+
         
         closeButton.frame = CGRectMake(10, 200, 200, 44)
         closeButton.backgroundColor = UIColor.clearColor()
@@ -66,6 +81,7 @@ class MenuViewController: UIViewController {
     {
         UIView.animateWithDuration(timeInt) { () -> Void in
             self.twitterButton.alpha = val
+            self.tweetsButton.alpha = val
             self.closeButton.alpha = val
         }
     }
@@ -81,6 +97,13 @@ class MenuViewController: UIViewController {
         let controller = UINavigationController.init(rootViewController: ViewController())
         self.sideMenuViewController?.setMainViewController(controller, animated: true, closeMenu: true)
     }
+    
+    @IBAction private func onSeeTweetsButtonPressed()
+    {
+        let controller = UINavigationController.init(rootViewController: TweetsMapViewController())
+        self.sideMenuViewController?.setMainViewController(controller, animated: true, closeMenu: true)
+    }
+    
     
     @IBAction private func onCloseButtonPressed()
     {

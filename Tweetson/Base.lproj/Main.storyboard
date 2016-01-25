@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Main View Controller-->
@@ -22,6 +23,38 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+        </scene>
+        <!--Tweet Table View Controller-->
+        <scene sceneID="zsr-ho-bnS">
+            <objects>
+                <viewController restorationIdentifier="TweetTableViewController" storyboardIdentifier="TweetTableViewController" id="smS-jS-rvn" customClass="TweetTableViewController" customModule="Tweetson" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Izv-GP-4ad"/>
+                        <viewControllerLayoutGuide type="bottom" id="61M-gk-60P"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="IkA-Z7-9NV">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sFg-Nn-WOY">
+                                <rect key="frame" x="0.0" y="28" width="600" height="572"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="sFg-Nn-WOY" firstAttribute="leading" secondItem="IkA-Z7-9NV" secondAttribute="leadingMargin" constant="-20" id="Azu-Mk-4hJ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="sFg-Nn-WOY" secondAttribute="trailing" constant="-20" id="cad-6y-GTe"/>
+                            <constraint firstItem="sFg-Nn-WOY" firstAttribute="top" secondItem="Izv-GP-4ad" secondAttribute="bottom" constant="8" id="d92-dh-p5P"/>
+                            <constraint firstItem="61M-gk-60P" firstAttribute="top" secondItem="sFg-Nn-WOY" secondAttribute="bottom" id="v9F-Ii-Ina"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="scrollView" destination="sFg-Nn-WOY" id="U8l-Tf-yZR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="52H-se-l2X" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1454" y="-162"/>
         </scene>
     </scenes>
 </document>
