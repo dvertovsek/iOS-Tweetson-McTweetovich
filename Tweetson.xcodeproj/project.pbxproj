@@ -11,6 +11,7 @@
 		527779211C5624DF0096712B /* TweetTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527779201C5624DF0096712B /* TweetTableViewController.swift */; };
 		527779311C5668EB0096712B /* semaphoretests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527779301C5668EB0096712B /* semaphoretests.swift */; };
 		527779331C567BB20096712B /* dictTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527779321C567BB20096712B /* dictTest.swift */; };
+		527779351C5787290096712B /* gettersTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527779341C5787290096712B /* gettersTest.swift */; };
 		527DB08D1C4A4E4E00866C03 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527DB08C1C4A4E4E00866C03 /* AppDelegate.swift */; };
 		527DB08F1C4A4E4E00866C03 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527DB08E1C4A4E4E00866C03 /* ViewController.swift */; };
 		527DB0921C4A4E4E00866C03 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 527DB0901C4A4E4E00866C03 /* Main.storyboard */; };
@@ -81,6 +82,7 @@
 		5277792A1C56669A0096712B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		527779301C5668EB0096712B /* semaphoretests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = semaphoretests.swift; sourceTree = "<group>"; };
 		527779321C567BB20096712B /* dictTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = dictTest.swift; sourceTree = "<group>"; };
+		527779341C5787290096712B /* gettersTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = gettersTest.swift; sourceTree = "<group>"; };
 		527DB0891C4A4E4E00866C03 /* Tweetson.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tweetson.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		527DB08C1C4A4E4E00866C03 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		527DB08E1C4A4E4E00866C03 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				5277792A1C56669A0096712B /* Info.plist */,
 				527779301C5668EB0096712B /* semaphoretests.swift */,
 				527779321C567BB20096712B /* dictTest.swift */,
+				527779341C5787290096712B /* gettersTest.swift */,
 			);
 			path = TweetsonTests;
 			sourceTree = "<group>";
@@ -507,6 +510,7 @@
 			files = (
 				527779311C5668EB0096712B /* semaphoretests.swift in Sources */,
 				527779331C567BB20096712B /* dictTest.swift in Sources */,
+				527779351C5787290096712B /* gettersTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

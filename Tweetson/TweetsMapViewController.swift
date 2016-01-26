@@ -12,6 +12,17 @@ import Eureka
 
 class TweetsMapViewController: FormViewController{
     
+    var randomQueries:String
+        {
+        get {
+            let array = [
+                "Star wars", "#starwars", "LOTR", "Ammon Bundy","#nightlife","restaurants","Ultra Music Festival","#Miami","#NYC","#country","#marines","#usn","#ocean","Canada"
+                ,"Croatia","Montreal","Zadar"]
+            let randomIndex = Int(arc4random_uniform(UInt32(array.count)))
+            return array[randomIndex]
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -28,9 +39,24 @@ class TweetsMapViewController: FormViewController{
         }
             .cellUpdate()
                 {_,row in
-                    let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("TweetTableViewController") as! TweetTableViewController
-                    vc.location = row.value!
-                    self.presentViewController(vc, animated: true, completion: nil)
+                    let alert = UIAlertController(title: "Twitter search query", message: "Enter a search query", preferredStyle: .Alert)
+                    alert.addTextFieldWithConfigurationHandler({ (textField) -> Void in
+                        textField.text = self.randomQueries
+                    })
+                    alert.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.Default, handler: nil))
+                    alert.addAction(UIAlertAction(title: "Send", style: .Default, handler:
+                        { (action) -> Void in
+                            
+                            let textField = alert.textFields![0] as UITextField
+                            print("Text field: \(textField.text)")
+                            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("TweetTableViewController") as! TweetTableViewController
+                            vc.location = row.value!
+                            vc.query = textField.text!
+                            self.presentViewController(vc, animated: true, completion: nil)
+                    }))
+                    
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    
                 }
 //            <<< ButtonRow() {
 //                $0.title = "See tweets"

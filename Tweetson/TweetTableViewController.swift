@@ -22,6 +22,7 @@ public class TweetTableViewController: UIViewController {
     private static var yPosition: CGFloat = 0
     
     public var location = CLLocation()
+    public var query = String()
     
     var httpreq: HTTPReq!
     
@@ -40,8 +41,8 @@ public class TweetTableViewController: UIViewController {
         let lat = String(location.coordinate.latitude)
         let long = String(location.coordinate.longitude)
         let params = [
-            "q" : "italy",
-            "geocode" : lat+","+long+",5km"
+            "q" : query,
+            "geocode" : lat+","+long+",50km"
         ]
         httpreq.httprequest(Alamofire.Method.GET, url: "https://api.twitter.com/1.1/search/tweets.json", headers: headers, parameters: params)
     }
@@ -55,6 +56,10 @@ extension TweetTableViewController: WebServiceResultDelegate
 {
     public func getResult(result: AnyObject) {
         let jsonStatuses = JSON(result)["statuses"]
+        
+        TweetTableViewController.scrollViewContentSize = 0
+        TweetTableViewController.yPosition = 0
+        
         for (_,status) in jsonStatuses {
             
             TWTRAPIClient().loadTweetWithID(String(status["id"])) { (tweet, error) in

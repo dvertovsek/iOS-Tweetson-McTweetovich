@@ -25,14 +25,78 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Tweetson/TweetTableViewController.swift"
-            timestampString = "475438146.334184"
+            filePath = "Tweetson/TweetsMapViewController.swift"
+            timestampString = "475499267.011742"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
-            landmarkName = "getResult(_:)"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "viewDidLoad()"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Tweetson/TweetsMapViewController.swift"
+            timestampString = "475499267.011742"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Tweetson/TweetsMapViewController.swift"
+            timestampString = "475499267.011742"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Tweetson.TweetsMapViewController.(viewDidLoad (Tweetson.TweetsMapViewController) -&gt; () -&gt; ()).(closure #2)"
+                  moduleName = "Tweetson"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/MTLab/Documents/Tweetson/Tweetson/TweetsMapViewController.swift"
+                  timestampString = "475499267.089758"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "56"
+                  endingLineNumber = "56"
+                  offsetFromSymbolStart = "1227">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Tweetson.TweetsMapViewController.(viewDidLoad (Tweetson.TweetsMapViewController) -&gt; () -&gt; ()).(closure #2).(closure #2)"
+                  moduleName = "Tweetson"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/MTLab/Documents/Tweetson/Tweetson/TweetsMapViewController.swift"
+                  timestampString = "475499267.090001"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "56"
+                  endingLineNumber = "56"
+                  offsetFromSymbolStart = "2404">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

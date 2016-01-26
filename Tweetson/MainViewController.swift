@@ -43,18 +43,6 @@ class MainViewController: UIViewController {
         
         self.view.addSubview(logInButton)
 
-        //Tweet view example
-        // TODO: Base this Tweet ID on some data from elsewhere in your app
-        TWTRAPIClient().loadTweetWithID("691619372536852480") { (tweet, error) in
-            if let unwrappedTweet = tweet {
-                let tweetView = TWTRTweetView(tweet: unwrappedTweet)
-                tweetView.center = CGPointMake(self.view.center.x, self.topLayoutGuide.length + tweetView.frame.size.height / 2);
-                self.view.addSubview(tweetView)
-            } else {
-                NSLog("Tweet load error: %@", error!.localizedDescription);
-            }
-        }
-
     }
     
     @IBAction private func onOpenButtonPressed()

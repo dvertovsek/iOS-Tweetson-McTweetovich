@@ -35,6 +35,34 @@ class semaphoretests: XCTestCase {
             waitForExpectationsWithTimeout(6, handler: nil)
     }
 
+    func testExample2() {
+        //        let semaphore = dispatch_semaphore_create(0) // 1
+        
+        let semaphore = dispatch_semaphore_create(0)
+//        dispatch_semaphore_signal(semaphore)
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), {
+            NSThread.sleepForTimeInterval(2)
+            dispatch_semaphore_signal(semaphore)
+        })
+        
+        let delayInSeconds:UInt64 = 6
+        let timeout = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds * NSEC_PER_SEC))
+        if(dispatch_semaphore_wait(semaphore, timeout) == 0)
+        {
+            
+            
+        }
+        else{
+            XCTFail()
+        }
+        
+        
+        
+//        {
+//            XCTFail()
+//        }
+    }
+    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measureBlock {
